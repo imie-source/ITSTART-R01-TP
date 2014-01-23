@@ -9,17 +9,17 @@
 </head>
 <body>
 <header>
-	<h1 class="titre">Opération </h1>
+	<h1 class="titre" id="titre">Opération </h1>
 </header>
 <aside>
 	<div id="operation">
 		<div>
 			<input type="text" id="op1" value="" />
-			<span id="operateur">+</span>
+			<span id="operateur"></span>
 			<input type="text" id="op2" value="" />
 		</div>
 		<div>
-			<button id="egal" onclick="doOperation('addition', 'op1', 'op2', 'resultat');">=</button>
+			<button id="egal" onclick="doOperation(getParameterByName('ope'), 'op1', 'op2', 'resultat');">=</button>
 			<input type="text" id="resultat" value="" disabled="disabled" />
 		</div>
 	</div>
@@ -34,7 +34,26 @@
 </footer>
 <script language="javascript" type="text/javascript">
 	//alert(getParameterByName('ope'));
-	document.title = document.title + " " + capitaliseFirstLetter(getParameterByName('ope'));
+	var titrePropre = capitaliseFirstLetter(getParameterByName('ope'));
+	document.title = document.title + " " + titrePropre;
+	document.getElementById("titre").innerHTML += " " + titrePropre;
+	switch(getParameterByName('ope')) {
+		case "addition":
+			document.getElementById("operateur").innerHTML = "+";
+			break;
+		case "soustraction":
+			document.getElementById("operateur").innerHTML = "-";
+			break;			
+		case "multiplication":
+			document.getElementById("operateur").innerHTML = "x";
+			break;			
+		case "division":
+			document.getElementById("operateur").innerHTML = "&divide;";
+			break;			
+		default:
+			document.getElementById("operateur").innerHTML = "?";
+			break;
+	}
 </script>
 </body>
 </html>
