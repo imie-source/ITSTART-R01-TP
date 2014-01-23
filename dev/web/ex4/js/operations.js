@@ -1,0 +1,23 @@
+/*
+	Fichier : operations.js
+	
+	Fichier contenant l'ensemble des fonctions javascript 
+	permettant le fonctionnement de l'exercice 4
+
+*/
+
+/*
+	clearForm efface l'ensemble des 3 champs du "formulaire" 
+*/
+function clearForm() {
+	var cOp1 = document.getElementById("op1");
+	var cOp2 = document.getElementById("op2");
+	var cResultat = document.getElementById("resultat");
+	cOp1.value = "";
+	cOp2.value = "";
+	cResultat.value = "";
+	/* var bEgal = document.getElementById("egal");
+	bEgal.style.display = "none";
+	bEgal.style.visibility = "hidden"; */
+}
+
