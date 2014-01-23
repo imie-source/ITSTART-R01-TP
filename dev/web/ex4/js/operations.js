@@ -21,3 +21,33 @@ function clearForm() {
 	bEgal.style.visibility = "hidden"; */
 }
 
+/*
+	doOperation effectue l'opération passée en argument
+	des deux opérandes passées en argument et place le
+	résultat dans le dernier argument
+*/
+function doOperation(ope, op1, op2, resultat) {
+	var cOp1 = document.getElementById(op1);
+	var cOp2 = document.getElementById(op2);
+	var cResultat = document.getElementById(resultat);
+	var vOp1 = cOp1.value;
+	var vOp2 = cOp2.value;
+	switch(ope) {
+		case "addition":
+			cResultat.value = vOp1 + vOp2;
+			break;
+		case "soustraction":
+			cResultat.value = vOp1 - vOp2;
+			break;			
+		case "multiplication":
+			cResultat.value = vOp1 * vOp2;
+			break;			
+		case "division":
+			cResultat.value = vOp1 / vOp2;
+			break;			
+		default:
+			cResultat.value = "NaN";
+	}		
+}
+
+
