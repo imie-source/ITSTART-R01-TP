@@ -5,21 +5,21 @@
 <link rel="stylesheet" type="text/css" href="../css/operation.css" />
 <script type="text/javascript" language="javascript" src="../js/operations.js"></script>
 <meta charset="UTF-8" />
-<title>Application Multiplication</title>
+<title>Application Addition</title>
 </head>
 <body>
 <header>
-	<h1 class="titre">Opération Multiplication</h1>
+	<h1 class="titre">Opération Addition</h1>
 </header>
 <aside>
 	<div id="operation">
 		<div>
 			<input type="text" id="op1" value="" />
-			<span id="operateur">x</span>
+			<span id="operateur">+</span>
 			<input type="text" id="op2" value="" />
 		</div>
 		<div>
-			<button id="egal" onclick="doOperation('multiplication', 'op1', 'op2', 'resultat');">=</button>
+			<button id="egal" onclick="getParameterByName('ope'); /*doOperation('addition', 'op1', 'op2', 'resultat');*/">=</button>
 			<input type="text" id="resultat" value="" disabled="disabled" />
 		</div>
 	</div>
