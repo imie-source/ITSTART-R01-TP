@@ -1,0 +1,36 @@
+/*
+	Feuille de style style.css
+	Styles commun à l'ensemble des pages de l'application
+*/
+
+body {
+	background-color: #a45200;
+	color: #f6ca9d;
+}
+
+h1 {
+	font-style: italic;
+}
+
+button {
+	color: #774106;
+}
+
+.titre {
+	color: blue;
+}
+
+h1.titre {
+	text-align: center;
+	color: #FFF;
+}
+
+
+#question {
+	text-align: center;
+	margin-bottom: 10%;
+}
+
+#menu {
+	text-align: center;
+}
