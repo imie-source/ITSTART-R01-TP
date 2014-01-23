@@ -30,8 +30,8 @@ function doOperation(ope, op1, op2, resultat) {
 	var cOp1 = document.getElementById(op1);
 	var cOp2 = document.getElementById(op2);
 	var cResultat = document.getElementById(resultat);
-	var vOp1 = cOp1.value;
-	var vOp2 = cOp2.value;
+	var vOp1 = parseInt(cOp1.value);
+	var vOp2 = parseInt(cOp2.value);
 	switch(ope) {
 		case "addition":
 			cResultat.value = vOp1 + vOp2;
@@ -49,5 +49,3 @@ function doOperation(ope, op1, op2, resultat) {
 			cResultat.value = "NaN";
 	}		
 }
-
-
