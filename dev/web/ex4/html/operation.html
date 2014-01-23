@@ -33,27 +33,7 @@
 	<p style="text-align: right; color: white;">ex4</p>
 </footer>
 <script language="javascript" type="text/javascript">
-	//alert(getParameterByName('ope'));
-	var titrePropre = capitaliseFirstLetter(getParameterByName('ope'));
-	document.title = document.title + " " + titrePropre;
-	document.getElementById("titre").innerHTML += " " + titrePropre;
-	switch(getParameterByName('ope')) {
-		case "addition":
-			document.getElementById("operateur").innerHTML = "+";
-			break;
-		case "soustraction":
-			document.getElementById("operateur").innerHTML = "-";
-			break;			
-		case "multiplication":
-			document.getElementById("operateur").innerHTML = "x";
-			break;			
-		case "division":
-			document.getElementById("operateur").innerHTML = "&divide;";
-			break;			
-		default:
-			document.getElementById("operateur").innerHTML = "?";
-			break;
-	}
+	tunningPage(getParameterByName("ope"));
 </script>
 </body>
 </html>

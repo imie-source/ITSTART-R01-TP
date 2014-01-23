@@ -75,3 +75,30 @@ function getParameterByName(name) {
 function capitaliseFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+/*
+	tunningPage met à jour dynamiquement le contenu de la page
+	operation.html en fonction de l'opération passée en argument
+*/
+function tunningPage(ope) {
+	var titrePropre = capitaliseFirstLetter(ope);
+	document.title = document.title + " " + titrePropre;
+	document.getElementById("titre").innerHTML += " " + titrePropre;
+	switch(ope) {
+		case "addition":
+			document.getElementById("operateur").innerHTML = "+";
+			break;
+		case "soustraction":
+			document.getElementById("operateur").innerHTML = "-";
+			break;			
+		case "multiplication":
+			document.getElementById("operateur").innerHTML = "x";
+			break;			
+		case "division":
+			document.getElementById("operateur").innerHTML = "&divide;";
+			break;			
+		default:
+			document.getElementById("operateur").innerHTML = "?";
+			break;
+	}
+}
