@@ -5,11 +5,11 @@
 <link rel="stylesheet" type="text/css" href="../css/operation.css" />
 <script type="text/javascript" language="javascript" src="../js/operations.js"></script>
 <meta charset="UTF-8" />
-<title>Application Addition</title>
+<title>Application </title>
 </head>
 <body>
 <header>
-	<h1 class="titre">Opération Addition</h1>
+	<h1 class="titre">Opération </h1>
 </header>
 <aside>
 	<div id="operation">
@@ -19,7 +19,7 @@
 			<input type="text" id="op2" value="" />
 		</div>
 		<div>
-			<button id="egal" onclick="getParameterByName('ope'); /*doOperation('addition', 'op1', 'op2', 'resultat');*/">=</button>
+			<button id="egal" onclick="doOperation('addition', 'op1', 'op2', 'resultat');">=</button>
 			<input type="text" id="resultat" value="" disabled="disabled" />
 		</div>
 	</div>
@@ -32,5 +32,9 @@
 	<hr />
 	<p style="text-align: right; color: white;">ex4</p>
 </footer>
+<script language="javascript" type="text/javascript">
+	//alert(getParameterByName('ope'));
+	document.title = document.title + " " + capitaliseFirstLetter(getParameterByName('ope'));
+</script>
 </body>
 </html>

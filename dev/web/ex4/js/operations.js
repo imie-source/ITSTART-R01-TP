@@ -55,14 +55,9 @@ function doOperation(ope, op1, op2, resultat) {
 	dans la query string
 */
 function getParameterByName(name) {
-	alert("etape1: " + name);
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-	alert("etape2: " + name);
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-	alert("etape3: " + "[\\?&]" + name + "=([^&#]*)");
     var results = regex.exec(location.search);
-	alert("etape4a: " + location.search);
-	alert("etape4b: " + results);
 	/*
 		if (results == null) {
 			return "";
@@ -70,6 +65,13 @@ function getParameterByName(name) {
 			return decodeURIComponent(results[1].replace(/\+/g, " "));
 		}
 	*/	
-	alert("etape5: " + decodeURIComponent(results[1].replace(/\+/g, " ")));
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+/*
+	capitaliseFirstLetter met la première lettre de la chaîne de 
+	caractère en majuscule
+*/
+function capitaliseFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
