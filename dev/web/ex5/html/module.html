@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<link rel="stylesheet" type="text/css" href="../css/module.css" />
+<meta charset="UTF-8" />
+<title>Module pédagogique</title>
+</head>
+<body>
+	<header>
+		<h1 class="titre">Module pédagogique</h1>
+	</header>
+	<form action="../php/enregistrer_module.php" method="POST">
+		<aside>
+			<div class="groupe">
+				<div id="dcategorie" class="module">Catégorie 
+					<select id="categorie" name="categorie" class="module">
+						<option value="A">Générale</option>
+						<option value="B">Système et Réseau</option>
+						<option value="C">Développement</option>
+						<option value="D">Projet</option>
+					</select>
+				</div>
+				<div id="dniveau" class="module">Niveau
+					<select id="niveau" name="niveau" class="module">
+						<option value="1">Débutant</option>
+						<option value="2">Confirmé</option>
+						<option value="3">Expert</option>
+					</select>
+				</div>
+				<div id="dintitule" class="module">Intitulé
+					<input type="text" id="intitule" name="intitule" class="module" />
+				</div>
+			</div>
+			<div class="groupe">
+				<div id="dobjectifs" class="module">Objectifs
+					<textarea id="objectifs" name="objectifs" class="module" rows="4" cols="80"></textarea>
+				</div>
+				<div id="dduree" class="module">Durée (j)
+					<input type="text" id="duree" name="duree" class="module" />
+				</div>
+			</div>
+			<div class="groupe">
+				<div id="dpublic" class="module">Public
+					<textarea id="public" name="public" class="module"></textarea>			
+				</div>
+				<div id="dprerequis" class="module">Pré-requis
+					<textarea id="prerequis" name="prerequis" class="module" ></textarea>
+				</div>
+			</div>
+			<div class="groupe">
+				<div id="dmodalites" class="module">Modalités
+					<select id="modalites" name="modalites" class="module" multiple size="3">
+						<option value="1">Dictée</option>
+						<option value="2">Exercices rédactionnels rapides</option>
+						<option value="3">Exercices pratiques</option>
+					</select>			
+				</div>
+				<div id="dprogramme" class="module">Programme
+					<textarea id="programme" name="programme" class="module" rows="7" cols="80"></textarea>			
+				</div>
+			</div>
+		</aside>
+		<nav>
+			<button id="annuler" type="button" onclick="document.location='accueil.html';">Annuler</button>
+			<button id="valider">Enregistrer le module</button>		
+		</nav>
+	</form>	
+	<footer>
+		<hr />
+		<p id="version">ex5</p>
+	</footer>
+</body>
+</html>

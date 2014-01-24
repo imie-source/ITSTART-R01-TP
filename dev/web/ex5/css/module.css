@@ -1,0 +1,104 @@
+/*
+	Fichier : module.css
+	Fichier contenant les styles du formulaire de module pédagogique
+*/	
+
+nav {
+	margin-top: 0%;
+}
+
+footer {
+	top: 83%;
+}	
+
+input, textarea , select {
+	border-width: 2px;
+	border-radius: 1vmin;
+}
+
+.module {
+	font-size: 2vmin;
+}
+
+div.groupe {
+	text-align: center;
+	margin: auto;
+	margin-top: 2vmin;
+	margin-bottom: 2vmin;
+}
+
+#dcategorie {
+	display: inline;
+	margin-right: 5vmin;
+}
+
+#dniveau {
+	display: inline;
+	margin-right: 5vmin;
+}
+
+#dintitule {
+	display: inline;
+}	
+
+#intitule {
+	width: 80vmin;
+}	
+
+#dobjectifs {
+	display: inline;
+	margin-right: 5vmin;
+}
+
+#objectifs {
+	vertical-align: middle;
+}
+
+#dduree {
+	display: inline;
+}
+
+#duree {
+	width: 7vmin;
+}
+
+#dpublic {
+	display: inline;
+}
+
+#public {
+	height: 4em;
+	width: 25em;
+	vertical-align: middle;
+	margin-right: 5vmin;
+}
+
+#dprerequis {
+	display: inline;
+}
+
+#prerequis {
+	height: 4em;
+	width: 25em;
+	vertical-align: middle;
+}
+
+#dmodalites {
+	display: inline;
+	margin-right: 5vmin;
+}
+
+#modalites {
+	height: 10em;
+	vertical-align: middle;
+}
+
+#dprogramme {
+	display: inline;
+}
+
+#programme {
+	height: 10em;
+	width: 45em;
+	vertical-align: middle;
+}
