@@ -1,0 +1,50 @@
+/*
+	Fichier : style.css
+	Fichier contenant les styles génériques de l'application
+	de gestion de modules pédagogiques
+*/	
+
+html {
+	margin: 0px;
+	height: 100%;
+	padding: 3%;
+	background-color: #bbb;
+}
+
+body{
+	margin: 0px;
+	min-height: 85%;
+	background-color: #eee;
+	padding: 1%;
+	border: 3px outset black;
+	border-radius: 30px; 
+}
+
+nav {
+	text-align: center;
+	position: relative;
+	margin-top: 15%;
+}
+
+footer {
+	position: absolute;
+	top: 83%;
+	left: 6%;
+	width: 88%;
+	text-align: right;
+}	
+
+button {
+	font-size: 4vmin;
+	color: #00a;
+	border-radius: 2vmin;
+}
+
+h1.titre {
+	text-align: center;
+	font-size: 6vmin;
+}	
+
+#version {
+	font-size: 2vmin;
+}
