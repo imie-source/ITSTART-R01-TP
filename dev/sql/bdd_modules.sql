@@ -6,7 +6,7 @@ CREATE DATABASE module;
 
 USE module;
 
-/* Création de la table Categorie */
+/* Création de la table "entité" Categorie */
 
 CREATE TABLE Categorie (
 	idCategorie CHAR(1) NOT NULL,
@@ -23,7 +23,7 @@ INSERT INTO Categorie (categorie_libelle) VALUES ("Système et Réseau");
 INSERT INTO Categorie (categorie_libelle) VALUES ("Développement");
 INSERT INTO Categorie (categorie_libelle) VALUES ("Projet");
 
-/* Création de la table Niveau */
+/* Création de la table "entité" Niveau */
 
 CREATE TABLE Niveau (
 	idNiveau INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -37,7 +37,7 @@ CREATE TABLE Niveau (
 
 INSERT INTO Niveau (niveau_libelle) VALUES ("Débutant"), ("Confirmé"), ("Expert");
 
-/* Création de la table Modalite */
+/* Création de la table "entité"  Modalite */
 
 CREATE TABLE Modalite (
 	idModalite INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -55,7 +55,7 @@ INSERT INTO Modalite (modalite_libelle) VALUES
 	("Exercices pratiques");
 	
 
-/* Création de la table module 
+/* Création de la table "entité" module 
    avec création des clés étrangères */
 
 CREATE TABLE Module (
@@ -72,3 +72,14 @@ CREATE TABLE Module (
 	FOREIGN KEY (Niveau_idNiveau) REFERENCES Niveau (idNiveau),
 	FOREIGN KEY (Categorie_idCategorie) REFERENCES Categorie (idCategorie)
 );
+
+/* Création de la table "association/relation" Module_has_Modalite
+*/
+
+CREATE TABLE Module_has_Modalite (
+	Module_idModule INTEGER UNSIGNED NOT NULL,
+	Modalite_idModalite INTEGER UNSIGNED NOT NULL,
+	PRIMARY KEY (Module_idModule, Modalite_idModalite),
+	FOREIGN KEY (Module_idModule) REFERENCES Module (idModule),
+	FOREIGN KEY (Modalite_idModalite) REFERENCES Modalite (idModalite)
+);	
