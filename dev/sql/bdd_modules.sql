@@ -51,6 +51,24 @@ CREATE TABLE Modalite (
 
 INSERT INTO Modalite (modalite_libelle) VALUES 
 	("Dictée"), 
-	("Exercices rédactionnels rapides"), ("Exercices pratiques");
+	("Exercices rédactionnels rapides"), 
+	("Exercices pratiques");
 	
 
+/* Création de la table module 
+   avec création des clés étrangères */
+
+CREATE TABLE Module (
+	idModule INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	intitule_module VARCHAR(255) NOT NULL,
+	objectifs TEXT NOT NULL,
+	duree FLOAT UNSIGNED NOT NULL,
+	public TEXT NOT NULL,
+	prerequis TEXT,
+	programme TEXT NOT NULL,
+	Niveau_idNiveau INTEGER UNSIGNED NOT NULL,
+	Categorie_idCategorie CHAR(1) NOT NULL,
+	PRIMARY KEY (idModule),
+	FOREIGN KEY (Niveau_idNiveau) REFERENCES Niveau (idNiveau),
+	FOREIGN KEY (Categorie_idCategorie) REFERENCES Categorie (idCategorie)
+);
