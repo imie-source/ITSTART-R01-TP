@@ -13,51 +13,57 @@
 	<form action="../php/enregistrer_module.php" method="POST">
 		<aside>
 			<div class="groupe">
-				<div id="dcategorie" class="module">Catégorie 
+				<div id="dcategorie" class="module">
+					<label for="categorie">Catégorie</label>
 					<select id="categorie" name="categorie" class="module">
-						<option value="A">Générale</option>
-						<option value="B">Système et Réseau</option>
-						<option value="C" selected="selected" >Développement</option>
-						<option value="D">Projet</option>
+						<?php echo $lesCategories; ?>
 					</select>
 				</div>
-				<div id="dniveau" class="module">Niveau
+				<div id="dniveau" class="module">
+					<label for="niveau">Niveau</label>
 					<select id="niveau" name="niveau" class="module">
 						<option value="1">Débutant</option>
 						<option value="2">Confirmé</option>
 						<option value="3">Expert</option>
 					</select>
 				</div>
-				<div id="dintitule" class="module">Intitulé
-					<input type="text" id="intitule" name="intitule" class="module" />
+				<div id="dintitule" class="module">
+					<label for="intitule">Intitulé</label>
+					<input type="text" id="intitule" name="intitule" class="module" required placeholder="Saisir le titre du module" />
 				</div>
 			</div>
 			<div class="groupe">
-				<div id="dobjectifs" class="module">Objectifs
-					<textarea id="objectifs" name="objectifs" class="module" rows="4" cols="80"></textarea>
+				<div id="dobjectifs" class="module">
+					<label for="objectifs">Objectifs</label>
+					<textarea id="objectifs" name="objectifs" class="module" rows="4" cols="80" required ></textarea>
 				</div>
-				<div id="dduree" class="module">Durée (j)
-					<input type="text" id="duree" name="duree" class="module" />
+				<div id="dduree" class="module">
+					<label for="duree">Durée</label>
+					<input type="text" id="duree" name="duree" class="module" required placeholder="jours" />
 				</div>
 			</div>
 			<div class="groupe">
-				<div id="dpublic" class="module">Public
-					<textarea id="public" name="public" class="module"></textarea>			
+				<div id="dpublic" class="module">
+					<label for="public">Public</label>
+					<textarea id="public" name="public" class="module" required ></textarea>			
 				</div>
-				<div id="dprerequis" class="module">Pré-requis
+				<div id="dprerequis" class="module">
+					<label for="prerequis">Pré-requis</label>
 					<textarea id="prerequis" name="prerequis" class="module" ></textarea>
 				</div>
 			</div>
 			<div class="groupe">
-				<div id="dmodalites" class="module">Modalités
-					<select id="modalites" name="modalites[]" class="module" multiple size="3">
+				<div id="dmodalites" class="module">
+					<label for="modalites">Modalités</label>
+					<select id="modalites" name="modalites[]" class="module" multiple size="3" required>
 						<option value="1">Dictée</option>
 						<option value="2">Exercices rédactionnels rapides</option>
 						<option value="3">Exercices pratiques</option>
 					</select>			
 				</div>
-				<div id="dprogramme" class="module">Programme
-					<textarea id="programme" name="programme" class="module" rows="7" cols="80"></textarea>			
+				<div id="dprogramme" class="module">
+					<label for="programme">Programme</label>
+					<textarea id="programme" name="programme" class="module" rows="7" cols="80" required></textarea>			
 				</div>
 			</div>
 		</aside>
