@@ -22,9 +22,7 @@
 				<div id="dniveau" class="module">
 					<label for="niveau">Niveau</label>
 					<select id="niveau" name="niveau" class="module">
-						<option value="1">Débutant</option>
-						<option value="2">Confirmé</option>
-						<option value="3">Expert</option>
+						<?php echo $lesNiveaux; ?>
 					</select>
 				</div>
 				<div id="dintitule" class="module">
@@ -56,9 +54,7 @@
 				<div id="dmodalites" class="module">
 					<label for="modalites">Modalités</label>
 					<select id="modalites" name="modalites[]" class="module" multiple size="3" required>
-						<option value="1">Dictée</option>
-						<option value="2">Exercices rédactionnels rapides</option>
-						<option value="3">Exercices pratiques</option>
+						<?php echo $lesModalites; ?>
 					</select>			
 				</div>
 				<div id="dprogramme" class="module">

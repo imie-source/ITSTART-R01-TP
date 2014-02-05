@@ -20,7 +20,7 @@
 		if (!$link) {
 			// On arrête le script et on affiche l'erreur
 			//die("Impossible de se connecter &agrave; la base : " . mysql_error());
-			return false;
+			return mysql_error();
 		}
 		
 		/* Sélection de la base de données */
