@@ -49,4 +49,27 @@
 		return $tabRes;
 	} /* Fin de la fonction getDonnees */
 	
+	/**
+	 * Fonction renvoyant le code HTML sous forme d'options des 
+	 * enregistrements contenu dans une table
+	 * @param string $tableName Nom de la table
+	 * @param string $primaryKey Nom du champ "clé primaire"
+	 * @param string $label Libellé de l'information
+	 * @return string Code HTML des options
+	 */
+	function createOptionsFromTable($tableName, $primaryKey, $label) {
+		$tab = getDonnees($tableName);
+		if (!is_array($tab)) {
+			$res = "<option value=\"\">BD not connected : " . utf8_encode($tab) . "</option>";
+		} else {
+			$res = "";
+			$nbElements = count($tab); // GreenIT ;-)
+			for($i = 0; $i < $nbElements; $i++) {
+				$res .= "<option value=\"" . 
+					$tab[$i][$primaryKey] . "\">" . 
+					utf8_encode($tab[$i][$label]) . "</option>\n";
+			}
+		}
+		return $res;
+	}
 ?>	
