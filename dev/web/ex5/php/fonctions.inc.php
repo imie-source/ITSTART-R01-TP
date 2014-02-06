@@ -27,13 +27,15 @@
 	
 	function bddErreur($codeErreur, $info) {
 		switch($codeErreur) {
-			case 0: 
-				die("Impossible de se connecter &agrave; la base de donn&eacute;es : " . $info);
+			case BDD_ERREUR_CNX: 
+				$msg = "Impossible de se connecter &agrave; la base de donn&eacute;es : ";
 				break;
-			case 1:
-				die("Erreur au moment de l'insertion : " . $info);
+			case BDD_ERREUR_INSERT:
+				$msg = "Erreur au moment de l'insertion : ";
 				break;
 		}
+		include("../html/bdderreur.html");
+		die();
 	}
 	
 	/*
