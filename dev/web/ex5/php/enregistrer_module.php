@@ -1,60 +1,27 @@
 <?php
 
-/*	foreach($_POST as $etiquette => $valeur) {
-		if ($etiquette == "modalites") {
-			echo "<p>" . $etiquette . " : ";
-			for($i = 0; $i < count($valeur); $i++) {
-				echo $valeur[$i] . ",";
-			}
-			echo "</p>\n";
-		} else {	
-			echo "<p>" . $etiquette . " : " . $valeur . "</p>\n";
-		}	
-	}*/
-	
-	/*foreach($_POST as $etiquette => $valeur) {
-		if (is_array($valeur)) {
-			echo "<p>" . $etiquette . " : ";
-			for($i = 0; $i < count($valeur); $i++) {
-				echo $valeur[$i] . ",";
-			}
-			echo "</p>\n";
-		} else {	
-			echo "<p>" . $etiquette . " : " . $valeur . "</p>\n";
-		}	
-	}
-	*/
+	/* Inclusion des variables de configuration */
+	include("fonctions.inc.php");
 
 	// Partie définition des variables ultérieurement utilisées
 	$categorie = isset($_POST["categorie"]) ? $_POST["categorie"] : "ND";
 	$niveau = isset($_POST["niveau"]) ? $_POST["niveau"] : "ND";
-	$intitule = isset($_POST["intitule"]) ? $_POST["intitule"] : "ND";
-	$objectifs = isset($_POST["objectifs"]) ? $_POST["objectifs"] : "ND";
+	$intitule = addslashes(isset($_POST["intitule"]) ? $_POST["intitule"] : "ND");
+	$objectifs = addslashes(isset($_POST["objectifs"]) ? $_POST["objectifs"] : "ND");
 	$duree = isset($_POST["duree"]) ? $_POST["duree"] : "ND";
-	$public = isset($_POST["public"]) ? $_POST["public"] : "ND";
-	$prerequis = isset($_POST["prerequis"]) ? $_POST["prerequis"] : "ND";
+	$public = addslashes(isset($_POST["public"]) ? $_POST["public"] : "ND");
+	$prerequis = addslashes(isset($_POST["prerequis"]) ? $_POST["prerequis"] : "ND");
 	$tabModalites = isset($_POST["modalites"]) ? $_POST["modalites"] : array();
-	$programme = isset($_POST["programme"]) ? $_POST["programme"] : "ND";
+	$programme = addslashes(isset($_POST["programme"]) ? $_POST["programme"] : "ND");
 	
 	// Enregistrement des données dans la base de données
-	/* Définition des variables utiles à la connexion à la base de données*/
-	$utilisateur = "modules";
-	$motdepasse = "modules2014!";
-	$hote = "127.0.0.1";
-	$port = 3306;
-	$nomBase = "modules";
+		
+	$link = cnxBase();
 	
-	/* Connexion à la base de données */
-	$link = @mysql_connect($hote.":".$port, $utilisateur, $motdepasse);
-		
-	/* Si la connexion ne s'effectue pas */
-	if (!$link) {
+	if (is_string($link)) {
 		// On arrête le script et on affiche l'erreur
-		die("Impossible de se connecter &agrave; la base : " . mysql_error());
+		die("Impossible de se connecter &agrave; la base : " . $link);
 	}
-		
-	/* Sélection de la base de données */
-	mysql_select_db($nomBase, $link);
 		
 	/* Préparation de la requète */
 	$requete = "INSERT INTO Module 

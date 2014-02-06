@@ -1,32 +1,42 @@
 <?php
 
-	/*
-		Fonction qui renvoie un tableau contenant les données d'une table
-		@param string $nomTable Nom de la table
-		@return Array Tableau contenant les enregistrements de la table
-	*/
-	function getDonnees($nomTable) {
-		/* Définition des variables utiles à la connexion à la base de données*/
-		$utilisateur = "modules";
-		$motdepasse = "modules2014!";
-		$hote = "127.0.0.1";
-		$port = 3306;
-		$nomBase = "modules";
+	/* Inclusion des variables de configuration */
+	include("../config/config.inc.php");
+	
+	function cnxBase() {
+		/* Rendre visible dans la fonction les variables "globales" du script */
+		global $hote, $port, $utilisateur, $motdepasse, $nomBase;
 		
 		/* Connexion à la base de données */
 		$link = @mysql_connect($hote.":".$port, $utilisateur, $motdepasse);
 		
 		/* Si la connexion ne s'effectue pas */
 		if (!$link) {
-			// On arrête le script et on affiche l'erreur
-			//die("Impossible de se connecter &agrave; la base : " . mysql_error());
+			// En cas d'erreur : on renvoie l'erreur
 			return mysql_error();
 		}
-		
+			
 		/* Sélection de la base de données */
 		mysql_select_db($nomBase, $link);
 		
-		//echo "Je me suis bien connect&eacute; &agrave; la base de donn&eacute;es : " . $link . "<br />";
+		return $link;
+	}
+	
+	/*
+		Fonction qui renvoie un tableau contenant les données d'une table
+		@param string $nomTable Nom de la table
+		@return Array Tableau contenant les enregistrements de la table
+	*/
+	function getDonnees($nomTable) {
+		
+		$link = cnxBase();
+		// Soit $link contient une chaîne de caractères (l'erreur)
+		// Soit $link contient une "ressource"
+		
+		// S'il y a un problème de connexion on renvoie l'erreur
+		if (is_string($link)) {
+			return $link;
+		}
 		
 		/* Préparation de la requète */
 		$requete = "SELECT * FROM " . $nomTable . ";";
