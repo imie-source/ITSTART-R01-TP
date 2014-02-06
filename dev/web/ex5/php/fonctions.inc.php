@@ -3,6 +3,9 @@
 	/* Inclusion des variables de configuration */
 	include("../config/config.inc.php");
 	
+	/* Inclusion de la définition des constantes */
+	include("constantes.inc.php");
+	
 	function cnxBase() {
 		/* Rendre visible dans la fonction les variables "globales" du script */
 		global $hote, $port, $utilisateur, $motdepasse, $nomBase;
@@ -20,6 +23,17 @@
 		mysql_select_db($nomBase, $link);
 		
 		return $link;
+	}
+	
+	function bddErreur($codeErreur, $info) {
+		switch($codeErreur) {
+			case 0: 
+				die("Impossible de se connecter &agrave; la base de donn&eacute;es : " . $info);
+				break;
+			case 1:
+				die("Erreur au moment de l'insertion : " . $info);
+				break;
+		}
 	}
 	
 	/*

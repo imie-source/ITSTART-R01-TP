@@ -20,7 +20,7 @@
 	
 	if (is_string($link)) {
 		// On arrête le script et on affiche l'erreur
-		die("Impossible de se connecter &agrave; la base : " . $link);
+		bddErreur(BDD_ERREUR_CNX, $link);
 	}
 		
 	/* Préparation de la requète */
@@ -55,7 +55,7 @@
 			// Si cela se passe mal...
 			if (!$result) {
 				// On affiche une erreur et on quitte le script
-				die("Erreur au moment de l'insertion : " . mysql_error()); 
+				bddErreur(BDD_ERREUR_INSERT, mysql_error());
 			}
 		} // if (count($tabModalites) > 0)
 		// On affiche que cela s'est bien passé et on quitte le script
@@ -68,7 +68,7 @@
 			 </body></html>");			
 	} // if ($result) { 
 	else {
-		die("Erreur au moment de l'insertion : " . mysql_error()); 
+		bddErreur(BDD_ERREUR_INSERT, mysql_error()); 
 	}
 		
 	/* Déconnexion de la base */
