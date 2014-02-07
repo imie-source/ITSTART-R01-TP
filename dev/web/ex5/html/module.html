@@ -27,27 +27,27 @@
 				</div>
 				<div id="dintitule" class="module">
 					<label for="intitule">Intitulé</label>
-					<input type="text" id="intitule" name="intitule" class="module" required placeholder="Saisir le titre du module" />
+					<input type="text" id="intitule" name="intitule" class="module" required placeholder="Saisir le titre du module" value="<?php echo $intitule; ?>"/>
 				</div>
 			</div>
 			<div class="groupe">
 				<div id="dobjectifs" class="module">
 					<label for="objectifs">Objectifs</label>
-					<textarea id="objectifs" name="objectifs" class="module" rows="4" cols="80" required ></textarea>
+					<textarea id="objectifs" name="objectifs" class="module" rows="4" cols="80" required ><?php echo $objectifs; ?></textarea>
 				</div>
 				<div id="dduree" class="module">
 					<label for="duree">Durée</label>
-					<input type="text" id="duree" name="duree" class="module" required placeholder="jours" />
+					<input type="text" id="duree" name="duree" class="module" required placeholder="jours" value="<?php echo $duree; ?>"/>
 				</div>
 			</div>
 			<div class="groupe">
 				<div id="dpublic" class="module">
 					<label for="public">Public</label>
-					<textarea id="public" name="public" class="module" required ></textarea>			
+					<textarea id="public" name="public" class="module" required ><?php echo $public; ?></textarea>			
 				</div>
 				<div id="dprerequis" class="module">
 					<label for="prerequis">Pré-requis</label>
-					<textarea id="prerequis" name="prerequis" class="module" ></textarea>
+					<textarea id="prerequis" name="prerequis" class="module" ><?php echo $prerequis; ?></textarea>
 				</div>
 			</div>
 			<div class="groupe">
@@ -59,7 +59,7 @@
 				</div>
 				<div id="dprogramme" class="module">
 					<label for="programme">Programme</label>
-					<textarea id="programme" name="programme" class="module" rows="7" cols="80" required></textarea>			
+					<textarea id="programme" name="programme" class="module" rows="7" cols="80" required><?php echo $programme; ?></textarea>			
 				</div>
 			</div>
 		</aside>

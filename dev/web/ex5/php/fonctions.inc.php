@@ -43,7 +43,7 @@
 		@param string $nomTable Nom de la table
 		@return Array Tableau contenant les enregistrements de la table
 	*/
-	function getDonnees($nomTable) {
+	function getDonnees($nomTable, $champs = "*") {
 		
 		$link = cnxBase();
 		// Soit $link contient une chaîne de caractères (l'erreur)
@@ -54,8 +54,15 @@
 			return $link;
 		}
 		
+		// Dans le cas où $champs contient un tableau
+		if (is_array($champs)) {
+			// on transforme le tableau de champs en une chaîne de caractères
+			// pour l'inclure dans la requête SQL
+			$champs = implode(",", $champs);
+		}
+		
 		/* Préparation de la requète */
-		$requete = "SELECT * FROM " . $nomTable . ";";
+		$requete = "SELECT " . $champs . " FROM " . $nomTable . ";";
 		
 		/* Exécution de la requète */
 		$result = mysql_query($requete, $link);
