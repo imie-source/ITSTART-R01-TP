@@ -63,7 +63,7 @@
 		
 		/* Préparation de la requète */
 		$requete = "SELECT " . $champs . " FROM " . $nomTable . ";";
-		
+
 		/* Exécution de la requète */
 		$result = mysql_query($requete, $link);
 
@@ -90,7 +90,7 @@
 	 * @param string $label Libellé de l'information
 	 * @return string Code HTML des options
 	 */
-	function createOptionsFromTable($tableName, $primaryKey, $label) {
+	function createOptionsFromTable($tableName, $primaryKey, $label, $idSelected = false) {
 		$tab = getDonnees($tableName);
 		if (!is_array($tab)) {
 			$res = "<option value=\"\">BD not connected : " . utf8_encode($tab) . "</option>";
@@ -98,11 +98,19 @@
 			$res = "";
 			$nbElements = count($tab); // GreenIT ;-)
 			for($i = 0; $i < $nbElements; $i++) {
-				$res .= "<option value=\"" . 
-					$tab[$i][$primaryKey] . "\">" . 
-					utf8_encode($tab[$i][$label]) . "</option>\n";
+				if (is_array($idSelected)) {
+					$res .= "<option value=\"" . 
+						    $tab[$i][$primaryKey] . "\"" . 
+							(in_array($tab[$i][$primaryKey], $idSelected) ? " selected " : "") .
+							">" . utf8_encode($tab[$i][$label]) . "</option>\n";
+				} else {
+					$res .= "<option value=\"" . 
+						$tab[$i][$primaryKey] . "\"" . 
+						($tab[$i][$primaryKey] == $idSelected ? " selected " : "") .
+						">" . utf8_encode($tab[$i][$label]) . "</option>\n";
+				}	
 			}
 		}
 		return $res;
 	}
-?>	
+?>
