@@ -5,10 +5,29 @@
 <link rel="stylesheet" type="text/css" href="../css/module.css" />
 <meta charset="UTF-8" />
 <title>Liste des modules</title>
+<script type="text/javascript">
+	function suppression(idModule) {
+		if (confirm('Souhaitez-vous réellement supprimer ce module ?')) {
+			// Récupération du champ "caché" idModule
+			var cIdModule = document.getElementById('idModule');
+			// Affectation du champ caché avec l'id du module à supprimer
+			cIdModule.value = idModule;
+			// Récupération du formulaire
+			var fFormSuppr = document.getElementById('formSuppr');
+			// Soumission du formulaire
+			fFormSuppr.submit();
+		}
+	}
+</script>
 </head>
 <body> 
 	<h1 style="text-align: center;">Liste des modules pr&eacute;sents</h1>
-	<?php echo $lesModules; ?>
+	<form action="supprimer_module.php" id="formSuppr" method="POST">
+		<input type="hidden" name="idModule" id="idModule" value="" />
+		<table style="width: 80%; margin: 0 auto;">
+			<?php echo $lesModules; ?>
+		</table>	
+	</form>
 	<p style="text-align: center;"><a href="../html/accueil.html">Retour &agrave; l'accueil</a></p>
 </body>
 </html>
