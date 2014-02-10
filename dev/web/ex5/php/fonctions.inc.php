@@ -33,6 +33,12 @@
 			case BDD_ERREUR_INSERT:
 				$msg = "Erreur au moment de l'insertion : ";
 				break;
+			case BDD_ERREUR_DELETE:
+				$msg = "Erreur au moment de la suppression : ";
+				break;
+			case BDD_ERREUR_UPDATE:
+				$msg = "Erreur au moment de la modification : ";
+				break;
 		}
 		include("../html/bdderreur.html");
 		die();
