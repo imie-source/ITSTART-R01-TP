@@ -82,7 +82,7 @@
 	   Module_has_Modalite l'ensemble des modalités liées au module
 	 */
 	if ($result) {
-		if (false === $idModule) { // Si on crée un module
+		if (!$idModule) { // Si on crée un module
 			/* Je récupère la clé primaire de l'enregistrement inséré dans la table
 			   Module */
 			$idModule = mysql_insert_id($link);
@@ -97,7 +97,7 @@
 			
 			if (!$result) {
 				// Si la suppression des anciennes relations ne s'est pas bien passée
-				bddErreur(BDD_ERREUR_DELETE, mysql_error()); 
+				bddErreur(BDD_ERREUR_DELETE, mysql_error(), $requete); 
 			}
 		}
 		// Si au moins une modalité associée au module
@@ -117,9 +117,9 @@
 	else { // En cas d'erreur lors de l'insertion ou de la mise à jour
 		
 		if (false === $idModule) { // Cas de l'insertion
-			bddErreur(BDD_ERREUR_INSERT, mysql_error());	
+			bddErreur(BDD_ERREUR_INSERT, mysql_error(), $requete);	
 		} else { // Cas de la mise à jour
-			bddErreur(BDD_ERREUR_UPDATE, mysql_error());
+			bddErreur(BDD_ERREUR_UPDATE, mysql_error(), $requete);
 		}
 	}
 	

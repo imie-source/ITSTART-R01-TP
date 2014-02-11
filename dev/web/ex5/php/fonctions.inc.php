@@ -25,7 +25,7 @@
 		return $link;
 	}
 	
-	function bddErreur($codeErreur, $info) {
+	function bddErreur($codeErreur, $info, $requete = "") {
 		switch($codeErreur) {
 			case BDD_ERREUR_CNX: 
 				$msg = "Impossible de se connecter &agrave; la base de donn&eacute;es : ";
