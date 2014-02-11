@@ -10,7 +10,7 @@
 	 * @param int $idModule l'id (clé primaire) du module
 	 * @param resource $link "Ticket" de connexion à la base de données
 	 */
-	function attribueRelationsEntreModuleEtModalites($tabModalites, $idModule, $link) {
+	function attribueRelationsEntreModuleEtModalites($tabModalites, $idModule, $cnxPDO) {
 		/* J'insère chaque relation entre le module et les modalités sous forme
 		   d'enregistrements dans la table Module_has_Modalite */
 		$requete = "INSERT INTO Module_has_Modalite 
@@ -18,12 +18,12 @@
 		for($i = 0; $i < count($tabModalites); $i++) {
 			$requete .= "(" . $tabModalites[$i] . ", $idModule)" . ($i < count($tabModalites)-1 ? "," : "");
 		}
+		
 		/* Exécution de la requète */
-		$result = mysql_query($requete, $link);
-		// Si cela se passe mal...
-		if (!$result) {
+		$result = $cnxPDO->exec($requete);
+		if (false === $result) {
 			// On affiche une erreur et on quitte le script
-			bddErreur(BDD_ERREUR_INSERT, mysql_error());
+			bddErreur(BDD_ERREUR_INSERT, $cnxPDO->errorInfo());
 		}
 	}
 
@@ -41,11 +41,11 @@
 	
 	// Enregistrement des données dans la base de données
 	
-	$link = cnxBase();
+	$cnxPDO = cnxBase();
 	
-	if (is_string($link)) {
+	if (is_string($cnxPDO)) {
 		// On arrête le script et on affiche l'erreur
-		bddErreur(BDD_ERREUR_CNX, $link);
+		bddErreur(BDD_ERREUR_CNX, $cnxPDO);
 	}
 	
 	if (!$idModule) { // création d'un nouveau module
@@ -74,18 +74,18 @@
 	}	
 	
 	/* Exécution de la requète */
-	$result = mysql_query($requete, $link);
+	$result = $cnxPDO->exec($requete);
 
 	/* Si la première insertion ou la mise à jour  est réalisée 
 	   et qu'au moins une modalité est associée, 
 	   on crée une seconde requète pour insérer dans la table
 	   Module_has_Modalite l'ensemble des modalités liées au module
 	 */
-	if ($result) {
+	if ($result !== false) {
 		if (!$idModule) { // Si on crée un module
 			/* Je récupère la clé primaire de l'enregistrement inséré dans la table
 			   Module */
-			$idModule = mysql_insert_id($link);
+			$idModule = $cnxPDO->lastInsertId();
 		} else { // Si on met à jour un module
 			/* Suppression de l'ensemble des relations entre les modalités et 
 			   le module concerné */
@@ -93,16 +93,16 @@
 			            WHERE Module_idModule = $idModule";
 						
 			/* Exécution de la requète */
-			$result = mysql_query($requete, $link);		
+			$result = $cnxPDO->exec($requete);		
 			
-			if (!$result) {
+			if (false === $result) {
 				// Si la suppression des anciennes relations ne s'est pas bien passée
-				bddErreur(BDD_ERREUR_DELETE, mysql_error(), $requete); 
+				bddErreur(BDD_ERREUR_DELETE, $cnxPDO->errorInfo(), $requete); 
 			}
 		}
 		// Si au moins une modalité associée au module
 		if (count($tabModalites) > 0) {
-			attribueRelationsEntreModuleEtModalites($tabModalites, $idModule, $link);
+			attribueRelationsEntreModuleEtModalites($tabModalites, $idModule, $cnxPDO);
 		} 
 		
 		// On affiche que cela s'est bien passé et on quitte le script
@@ -117,13 +117,10 @@
 	else { // En cas d'erreur lors de l'insertion ou de la mise à jour
 		
 		if (false === $idModule) { // Cas de l'insertion
-			bddErreur(BDD_ERREUR_INSERT, mysql_error(), $requete);	
+			bddErreur(BDD_ERREUR_INSERT, $cnxPDO->errorInfo(), $requete);	
 		} else { // Cas de la mise à jour
-			bddErreur(BDD_ERREUR_UPDATE, mysql_error(), $requete);
+			bddErreur(BDD_ERREUR_UPDATE, $cnxPDO->errorInfo(), $requete);
 		}
 	}
-	
-	/* Déconnexion de la base */
-	mysql_close($link);
 	
 ?>

@@ -6,25 +6,38 @@
 	/* Inclusion de la définition des constantes */
 	include("constantes.inc.php");
 	
+	/**
+	 * Connexion à la base de données avec le module PDO
+	 * @return mixed Objet PDO ou Chaîne de caractères décrivant l'erreur
+	 */
 	function cnxBase() {
 		/* Rendre visible dans la fonction les variables "globales" du script */
 		global $hote, $port, $utilisateur, $motdepasse, $nomBase;
 		
 		/* Connexion à la base de données */
-		$link = @mysql_connect($hote.":".$port, $utilisateur, $motdepasse);
-		
-		/* Si la connexion ne s'effectue pas */
-		if (!$link) {
-			// En cas d'erreur : on renvoie l'erreur
-			return mysql_error();
+		// Définition du DSN : Data Source Name
+		$dsn = "mysql:host=$hote;port=$port;dbname=$nomBase";
+		// Tentative de connexion à la base en instanciant une classe PDO
+		try {
+			// Création de l'instance de la classe PDO avec les paramètres de cnx
+			$cnxPDO = new PDO($dsn, $utilisateur, $motdepasse);
+		} catch(PDOException $exception) {
+			/* En cas d'erreur, le constructeur de la classe PDO lève une exception
+			   de type PDOException que l'on capture et qui est placée dans
+			   la variable $exception */
+			// Renvoie le message décrivant l'erreur
+			return $exception->getMessage();
 		}
-			
-		/* Sélection de la base de données */
-		mysql_select_db($nomBase, $link);
-		
-		return $link;
+		// Renvoie l'objet créé
+		return $cnxPDO;
 	}
 	
+	/**
+	 * Gestion des erreurs de BDD avec affichage d'une page HTML d'erreur personnalisée
+	 * @param int $codeErreur Code erreur BDD
+	 * @param mixed $info Chaîne de caractères ou tableau décrivant les erreurs
+	 * @param string $requete Requête ayant généré l'erreur
+	 */
 	function bddErreur($codeErreur, $info, $requete = "") {
 		switch($codeErreur) {
 			case BDD_ERREUR_CNX: 
@@ -40,6 +53,13 @@
 				$msg = "Erreur au moment de la modification : ";
 				break;
 		}
+		// Si $info est un tableau,
+		if (is_array($info)) {
+			// on le transforme en une chaîne "continue" de caractères,
+			// chaque élément étant séparé par un saut de ligne HTML
+			$info = implode("<br />", $info);
+		}
+		// Inclusion du "modèle" HTML 
 		include("../html/bdderreur.html");
 		die();
 	}
@@ -51,13 +71,13 @@
 	*/
 	function getDonnees($nomTable, $champs = "*") {
 		
-		$link = cnxBase();
-		// Soit $link contient une chaîne de caractères (l'erreur)
-		// Soit $link contient une "ressource"
+		$cnxPDO = cnxBase();
+		// Soit $cnxPDO contient une chaîne de caractères (l'erreur)
+		// Soit $cnxPDO contient un objet de classe PDO
 		
 		// S'il y a un problème de connexion on renvoie l'erreur
-		if (is_string($link)) {
-			return $link;
+		if (is_string($cnxPDO)) {
+			return $cnxPDO;
 		}
 		
 		// Dans le cas où $champs contient un tableau
@@ -71,19 +91,10 @@
 		$requete = "SELECT " . $champs . " FROM " . $nomTable . ";";
 
 		/* Exécution de la requète */
-		$result = mysql_query($requete, $link);
-
-		/* Parcours des enregistrements */
-		while($tabRow = mysql_fetch_assoc($result)) {
-			//echo $tabRow["idCategorie"] . " : " . $tabRow["categorie_libelle"] . "<br />";
-			$tabRes[] = $tabRow;
-		}
+		$result = $cnxPDO->query($requete);
 		
-		/* Libération du "ticket" */
-		mysql_free_result($result);
-		
-		/* Déconnexion de la base */
-		mysql_close($link);
+		// Initialisation de la variable "resultat" 
+		$tabRes = $result->fetchAll(PDO::FETCH_ASSOC);
 		
 		return $tabRes;
 	} /* Fin de la fonction getDonnees */

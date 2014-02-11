@@ -8,23 +8,23 @@
 	if ($idModule) {
 	
 		// Connexion à la base de données
-		$link = cnxBase();
+		$cnxPDO = cnxBase();
 	
 		// Gestion des erreurs éventuelles
-		if (is_string($link)) {
+		if (is_string($cnxPDO)) {
 			// On arrête le script et on affiche l'erreur
-			bddErreur(BDD_ERREUR_CNX, $link);
+			bddErreur(BDD_ERREUR_CNX, $cnxPDO);
 		}
 		// Suppression des relations entre le module et ses modalités
 		$requete = "DELETE FROM Module_has_Modalite
 		            WHERE Module_idModule = " . $idModule;
 					
 		/* Exécution de la requète */
-		$result = mysql_query($requete, $link, $requete);
+		$result = $cnxPDO->exec($requete);
 		
 		// Gestion des erreurs éventuelles
-		if (!$result) {
-			bddErreur(BDD_ERREUR_DELETE, $link, $requete);
+		if (false === $result) {
+			bddErreur(BDD_ERREUR_DELETE, $cnxPDO->errorInfo(), $requete);
 		}					
 						
 		// Suppression du module
@@ -32,15 +32,12 @@
                     WHERE idModule = " . $idModule;		
 					 
 		/* Exécution de la requète */
-		$result = mysql_query($requete, $link, $requete);
+		$result = $cnxPDO->exec($requete);
 		
 		// Gestion des erreurs éventuelles
-		if (!$result) {
-			bddErreur(BDD_ERREUR_DELETE, $link, $requete);
+		if (false === $result) {
+			bddErreur(BDD_ERREUR_DELETE, $cnxPDO->errorInfo(), $requete);
 		}
-		
-		/* Déconnexion de la base */
-		mysql_close($link);
 		
 		header("Location: liste_modules.php"); 
 		
