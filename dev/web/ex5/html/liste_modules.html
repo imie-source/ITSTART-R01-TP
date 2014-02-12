@@ -22,12 +22,13 @@
 </head>
 <body> 
 	<h1 style="text-align: center;">Liste des modules pr&eacute;sents</h1>
-	<form action="supprimer_module.php" id="formSuppr" method="POST">
+	<form action="<?php echo $_SERVER["PHP_SELF"]; ?>" id="formSuppr" method="POST">
 		<input type="hidden" name="idModule" id="idModule" value="" />
+		<input type="hidden" name="action" value="supprimerModule" />
 		<table style="width: 80%; margin: 0 auto;">
 			<?php echo $lesModules; ?>
 		</table>	
 	</form>
-	<p style="text-align: center;"><a href="../html/accueil.html">Retour &agrave; l'accueil</a></p>
+	<p style="text-align: center;"><a href="<?php echo $_SERVER["PHP_SELF"]; ?>">Retour &agrave; l'accueil</a></p>
 </body>
 </html>
