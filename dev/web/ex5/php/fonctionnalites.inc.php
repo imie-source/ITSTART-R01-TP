@@ -25,39 +25,39 @@
 		// Si un id de module est passé en paramètre (méthode GET)
 		if ($idModule) {
 			// Récupération de l'ensemble des enregistrements des modules
-			$tabModules = getDonnees("Module");
+			$tabModules = getDonnees(TABLE_MODULE);
 			// Recherche du module spécifique
 			for($i = 0; $i < count($tabModules); $i++) {
 				// L'id du module correspond-il à celui demandé ?
-				if ($tabModules[$i]["idModule"] == $idModule) {
+				if ($tabModules[$i][MODULE_ID] == $idModule) {
 					// Oui, on récupère l'ensemble des informations
-					$intitule = $tabModules[$i]["intitule_module"];
-					$objectifs = $tabModules[$i]["objectifs"];
-					$public = $tabModules[$i]["public"];
-					$duree = $tabModules[$i]["duree"];
-					$programme = $tabModules[$i]["programme"];
-					$prerequis = $tabModules[$i]["prerequis"];
-					$categorie = $tabModules[$i]["Categorie_idCategorie"];
-					$niveau = $tabModules[$i]["Niveau_idNiveau"];
+					$intitule = $tabModules[$i][MODULE_INTITULE];
+					$objectifs = $tabModules[$i][MODULE_OBJECTIFS];
+					$public = $tabModules[$i][MODULE_PUBLIC];
+					$duree = $tabModules[$i][MODULE_DUREE];
+					$programme = $tabModules[$i][MODULE_PROGRAMME];
+					$prerequis = $tabModules[$i][MODULE_PREREQUIS];
+					$categorie = $tabModules[$i][MODULE_IDCATEGORIE];
+					$niveau = $tabModules[$i][MODULE_IDNIVEAU];
 					// Pas la peine de continuer, on a trouvé, donc on arrête la boucle
 					break;
 				}
 			}
-			$tabRelationModuleModalites = getDonnees("module_has_modalite");
+			$tabRelationModuleModalites = getDonnees(TABLE_MODULE_HAS_MODALITE);
 			// Recherche des modalités liées au module spécifique
 			// On parcourt l'ensemble des relations entre les modules et les modalités
 			for($i = 0; $i < count($tabRelationModuleModalites); $i++) {
 				// Si une relation met en jeu le module demandé
-				if ($tabRelationModuleModalites[$i]["Module_idModule"] == $idModule) {
+				if ($tabRelationModuleModalites[$i][MODMOD_IDMODULE] == $idModule) {
 					// On stocke l'id de la modalité dans le tableau $tabModalites
-					$tabModalites[] = $tabRelationModuleModalites[$i]["Modalite_idModalite"];
+					$tabModalites[] = $tabRelationModuleModalites[$i][MODMOD_IDMODALITE];
 				}
 			}
 		}
 		// Génération des listes des "select" avec potentiellement la "sélection" d'une passée en 4ème argument
-		$lesCategories = createOptionsFromTable("Categorie", "idCategorie", "categorie_libelle", $categorie); 
-		$lesNiveaux = createOptionsFromTable("Niveau", "idNiveau", "niveau_libelle", $niveau); 
-		$lesModalites = createOptionsFromTable("Modalite", "idModalite", "modalite_libelle", $tabModalites); 
+		$lesCategories = createOptionsFromTable(TABLE_CATEGORIE, CATEGORIE_ID, CATEGORIE_LIBELLE, $categorie); 
+		$lesNiveaux = createOptionsFromTable(TABLE_NIVEAU, NIVEAU_ID, NIVEAU_LIBELLE, $niveau); 
+		$lesModalites = createOptionsFromTable(TABLE_MODALITE, MODALITE_ID, MODALITE_LIBELLE, $tabModalites); 
 
 		include("../html/module.html");
 	} // Fin creerModule
@@ -72,8 +72,8 @@
 	function attribueRelationsEntreModuleEtModalites($tabModalites, $idModule, $cnxPDO) {
 		/* J'insère chaque relation entre le module et les modalités sous forme
 		   d'enregistrements dans la table Module_has_Modalite */
-		$requete = "INSERT INTO Module_has_Modalite 
-					(Modalite_idModalite, Module_idModule) VALUES ";
+		$requete = "INSERT INTO " . TABLE_MODULE_HAS_MODALITE . "  
+					(" . MODMOD_IDMODALITE. ", " . MODMOD_IDMODULE . ") VALUES ";
 		for($i = 0; $i < count($tabModalites); $i++) {
 			$requete .= "(" . $tabModalites[$i] . ", $idModule)" . ($i < count($tabModalites)-1 ? "," : "");
 		}
@@ -116,26 +116,31 @@
 		if (!$idModule) { // création d'un nouveau module
 				
 			/* Préparation de la requète */
-			$requete = "INSERT INTO Module 
-						(Niveau_idNiveau, Categorie_idCategorie, intitule_module, 
-						 Objectifs, duree, public, prerequis, programme) 
+			$requete = "INSERT INTO " . TABLE_MODULE . "  
+						(" . MODULE_IDNIVEAU . ", " .
+						 MODULE_IDCATEGORIE . ", " .
+						 MODULE_INTITULE . ", " .
+						 MODULE_OBJECTIFS . ", " . 
+						 MODULE_DUREE . ", " .
+						 MODULE_PUBLIC . ", " .
+						 MODULE_PREREQUIS . ", " .
+						 MODULE_PROGRAMME . ") 
 						VALUES 
 						($niveau, '$categorie', '$intitule', 
 						 '$objectifs', $duree, '$public', '$prerequis', '$programme')"; 
 		} else { // modification d'un module
 			
 		/* Préparation de la requète */
-			$requete = "UPDATE Module
-						SET Niveau_idNiveau = $niveau,
-							Categorie_idCategorie = '$categorie',
-							intitule_module = '$intitule',
-							Objectifs = '$objectifs',
-							duree = $duree,
-							public = '$public',
-							prerequis = '$prerequis',
-							programme = '$programme'
-						WHERE idModule = $idModule";		
-		
+			$requete = "UPDATE " . TABLE_MODULE . " 
+						SET " . MODULE_IDNIVEAU . " = $niveau, " .
+							MODULE_IDCATEGORIE . " = '$categorie', " .
+							MODULE_INTITULE . " = '$intitule', " . 
+							MODULE_OBJECTIFS . " = '$objectifs', " .
+							MODULE_DUREE . " = $duree, " .
+							MODULE_PUBLIC . " = '$public', " .
+							MODULE_PREREQUIS . " = '$prerequis', " .
+							MODULE_PROGRAMME . " = '$programme' 
+						WHERE " . MODULE_ID . " = $idModule";		
 		}	
 		
 		/* Exécution de la requète */
@@ -154,8 +159,8 @@
 			} else { // Si on met à jour un module
 				/* Suppression de l'ensemble des relations entre les modalités et 
 				   le module concerné */
-				$requete = "DELETE FROM Module_has_Modalite
-							WHERE Module_idModule = $idModule";
+				$requete = "DELETE FROM " . TABLE_MODULE_HAS_MODALITE . "
+							WHERE " . MODMOD_IDMODULE . " = $idModule";
 							
 				/* Exécution de la requète */
 				$result = $cnxPDO->exec($requete);		
@@ -193,7 +198,7 @@
 		
 		// On récupère l'ensemble des enregistrements de la table Module sous
 		// forme de tableau de tableaux associatifs
-		$tabModules = getDonnees("Module", array("intitule_module", "idModule"));
+		$tabModules = getDonnees(TABLE_MODULE, array(MODULE_INTITULE, MODULE_ID));
 		
 		// On parcourt l'ensemble des enregistrements et on en extrait l'intitulé
 		// qui est rajouté à la variable $lesModules encapsulé par des balises
@@ -201,10 +206,10 @@
 		for($i = 0; $i < count($tabModules); $i++) {
 			$lesModules .= "<tr>";
 			$lesModules .= "<td style=\"border: 1px solid black;\" >";
-			$lesModules .= "<a href=\"" . $_SERVER["PHP_SELF"] . "?idModule=" . $tabModules[$i]["idModule"] . "&action=creerModule\">" . $tabModules[$i]["intitule_module"] . "</a>";
+			$lesModules .= "<a href=\"" . $_SERVER["PHP_SELF"] . "?idModule=" . $tabModules[$i][MODULE_ID] . "&action=creerModule\">" . $tabModules[$i][MODULE_INTITULE] . "</a>";
 			$lesModules .= "</td>";
 			$lesModules .= "<td style=\"text-align: center; vertical-align: middle;\" >";
-			$lesModules .= "<img src=\"../medias/images/supprimer.gif\" onclick=\"suppression(" . $tabModules[$i]["idModule"] . ");\"/>";
+			$lesModules .= "<img src=\"../medias/images/supprimer.gif\" onclick=\"suppression(" . $tabModules[$i][MODULE_ID] . ");\"/>";
 			$lesModules .= "</td>";
 			$lesModules .= "</tr>\n";
 		}
@@ -228,8 +233,8 @@
 			bddErreur(BDD_ERREUR_CNX, $cnxPDO);
 		}
 		// Suppression des relations entre le module et ses modalités
-		$requete = "DELETE FROM Module_has_Modalite
-					WHERE Module_idModule = " . $idModule;
+		$requete = "DELETE FROM " . TABLE_MODULE_HAS_MODALITE . " 
+					WHERE " . MODMOD_IDMODULE . " = " . $idModule;
 					
 		/* Exécution de la requète */
 		$result = $cnxPDO->exec($requete);
@@ -240,8 +245,8 @@
 		}					
 						
 		// Suppression du module
-		$requete = "DELETE FROM Module
-					WHERE idModule = " . $idModule;		
+		$requete = "DELETE FROM " . TABLE_MODULE . " 
+					WHERE " . MODULE_ID . " = " . $idModule;		
 					 
 		/* Exécution de la requète */
 		$result = $cnxPDO->exec($requete);
