@@ -1,5 +1,7 @@
 <?php
 
+	include(__DIR__ . "/../fonctions.inc.php");
+
 	class voiture {
 	
 		private $_couleur;
@@ -24,7 +26,8 @@
 		const ENERGIE_DIESEL = "diesel";
 		const ENERGIE_GPL = "gpl";
 		const ENERGIE_ELECTRICITE = "électricité";
-		
+		const ENERGIE_NONCONNUE = "non connue";
+
 				
 		
 		public function __construct($couleur, $marque, $modele, $immatriculation, $nbPortes, $puissance, $boiteVitesse, $nbVitesses, $energie) {
@@ -117,18 +120,22 @@
 		
 		public function setEnergie($energie) {
 			$energie = strtolower($energie);
-			$energie = retireAccent($energie);
+			$energie = retireAccents($energie);
 			switch($energie) {
 				case "essence" :
-					
+					$this->_energie = self::ENERGIE_ESSENCE;
+					break;
 				case "diesel" :
-					$this->_energie = $energie;
+					$this->_energie = self::ENERGIE_DIESEL;
 					break;
 				case "electricite" :
-					
+					$this->_energie = self::ENERGIE_ELECTRICITE;
+					break;
+				case "gpl" :
+					$this->_energie = self::ENERGIE_GPL;
 					break;
 				default:
-					$this->_energie = "ND";
+					$this->_energie = self::ENERGIE_NONCONNUE;
 			}
 		}	
 		

@@ -2,7 +2,7 @@
 
 	include("class/voiture.class.php");
 
-	$maBatmobile = new voiture("rouge");
+	$maBatmobile = new voiture("rouge", "lada", "coupébat", "ecoBAT-01", 2, 600, "automatique", 12, "GPL");
 	
 	echo $maBatmobile;
 	

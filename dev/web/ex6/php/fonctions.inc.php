@@ -1,0 +1,19 @@
+<?php
+
+	/**
+	 * Librairie de fonctions "outils"
+	 */
+	 
+	/**
+	 * Retire l'ensemble des accents d'une chaîne de caractères
+	 * 
+	 * @param string $string Chaîne dont on retire les accents
+	 * @return string Chaîne sans accent
+	 */
+	function retireAccents($string) {
+		return strtr($string,
+					 'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ',
+					 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+	}
+
+?>
