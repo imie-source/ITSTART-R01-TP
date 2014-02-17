@@ -1,13 +1,14 @@
 <?php
 
-	include("class/voiture.class.php");
+	include_once("class/voiture.class.php");
+	include_once("class/vehicule.class.php");
 
-	$maBatmobile = new voiture("rouge", "lada", "coupébat", "ecoBAT-01", 2, 600, "automatique", 12, "GPL");
+	$maBatmobile = new voiture("rouge", "lada", "coupébat", "ecoBAT-01", 2, 600, voiture::BV_AUTOMATIQUE, 12, voiture::ENERGIE_GPL);
 	
-	echo $maBatmobile;
+	echo "<pre>" . htmlentities($maBatmobile, ENT_HTML5) . "</pre>";
+
+	$monTracteurRouge = new vehicule("rouge", "MASSEY FERGUSON", "MF 8500", 400, vehicule::ENERGIE_FUEL);
 	
-	$maBatmobile->setCouleur("bleue");
-	
-	echo "la couleur de ma voiture est : " . $maBatmobile->getCouleur() . "<br />";
+	echo "<pre>" . htmlentities($monTracteurRouge, ENT_HTML5) . "</pre>";
 
 ?>

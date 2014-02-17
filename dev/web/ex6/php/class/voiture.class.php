@@ -1,77 +1,27 @@
 <?php
 
-	include(__DIR__ . "/../fonctions.inc.php");
+	include_once(__DIR__ . "/vehicule.class.php");
 
-	class voiture {
+	class voiture extends vehicule {
 	
-		private $_couleur;
-		
-		private $_marque;
-		
-		private $_modele;
-		
 		private $_immatriculation;
 		
 		private $_nbPortes;
-		
-		private $_puissance;
 		
 		private $_boiteVitesse;
 		
 		private $_nbVitesses;
 		
-		private $_energie;
+		const BV_AUTOMATIQUE = "automatique";
+		const BV_MANUELLE = "manuelle";
 		
-		const ENERGIE_ESSENCE = "essence";
-		const ENERGIE_DIESEL = "diesel";
-		const ENERGIE_GPL = "gpl";
-		const ENERGIE_ELECTRICITE = "électricité";
-		const ENERGIE_NONCONNUE = "non connue";
-
-				
-		
-		public function __construct($couleur, $marque, $modele, $immatriculation, $nbPortes, $puissance, $boiteVitesse, $nbVitesses, $energie) {
-			echo "je suis construit, avec la couleur : $couleur !<br />";
-			$this->setCouleur($couleur);
-			$this->setMarque($marque);
-			$this->setModele($modele);
+		public function __construct($couleur, $marque, $modele, $immatriculation, $nbPortes, $puissance, $boiteVitesse = self::BV_MANUELLE, $nbVitesses = 5, $energie = self::ENERGIE_DIESEL) {
+			parent::__construct($couleur, $marque, $modele, $puissance, $energie);
+			echo "moi, " . __CLASS__ . ", je suis construit, avec la couleur : $couleur !<br />";
 			$this->setImmatriculation($immatriculation);
 			$this->setNbPortes($nbPortes);
-			$this->setPuissance($puissance);
 			$this->setBoiteVitesse($boiteVitesse);
 			$this->setNbVitesses($nbVitesses);
-			$this->setEnergie($energie);
-		}
-		
-		public function getCouleur() {
-			return $this->_couleur;
-		}
-		
-		public function setCouleur($couleur) {
-			switch($couleur) {
-				case "noir":
-				case "rouge": 
-					$this->_couleur = $couleur;
-					break;
-				default:
-					$this->_couleur = "NA";
-			}		
-		}
-		
-		public function getMarque() {
-			return $this->_marque;
-		}
-		
-		public function setMarque($marque) {
-			$this->_marque = $marque;
-		}
-		
-		public function getModele() {
-			return $this->_modele;
-		}
-		
-		public function setModele($modele) {
-			$this->_modele = $modele;
 		}
 		
 		public function getImmatriculation() {
@@ -90,16 +40,8 @@
 			$this->_nbPortes = $nbPortes;
 		}
 		
-		public function getPuissance() {
-			return $this->_puissance;
-		}
-		
-		public function setPuissance($puissance) {
-			$this->_puissance = $puissance;
-		}
-		
 		public function getBoiteVitesse() {
-			return $this->_boiteVitese;
+			return $this->_boiteVitesse;
 		}
 		
 		public function setBoiteVitesse($boiteVitesse) {
@@ -114,33 +56,31 @@
 			$this->_nbVitesses = $nbVitesses;
 		}
 		
-		public function getEnergie() {
-			return $this->_energie;
-		}
-		
-		public function setEnergie($energie) {
-			$energie = strtolower($energie);
-			$energie = retireAccents($energie);
-			switch($energie) {
-				case "essence" :
-					$this->_energie = self::ENERGIE_ESSENCE;
+		public function __toString() {
+			$desc = "je suis une " . __CLASS__ . " ";
+			$desc .= $this->getMarque() . "\n";
+			$desc .= " type " . $this->getModele() . "\n";
+			$desc .= " de couleur " . $this->getCouleur() . "\n";
+			$desc .= " immatriculée " . $this->getImmatriculation() . "\n";
+			$desc .= " (" . $this->getNbPortes() . "p)\n";
+			$desc .= " de " . $this->getPuissance() . "CV\n";
+			$desc .= " - boîte de vitesse : " . $this->getBoiteVitesse() . "\n";
+			$desc .= " avec " . $this->getNbVitesses() . " vitesses\n";
+			$desc .= " roulant ";
+			switch($this->getEnergie()) {
+				case self::ENERGIE_ESSENCE:
+				case self::ENERGIE_ELECTRICITE:
+					$desc .= "à l'";
 					break;
-				case "diesel" :
-					$this->_energie = self::ENERGIE_DIESEL;
-					break;
-				case "electricite" :
-					$this->_energie = self::ENERGIE_ELECTRICITE;
-					break;
-				case "gpl" :
-					$this->_energie = self::ENERGIE_GPL;
+				case self::ENERGIE_DIESEL:
+				case self::ENERGIE_GPL:
+					$desc .= "au ";
 					break;
 				default:
-					$this->_energie = self::ENERGIE_NONCONNUE;
+					$desc .= "avec une énergie ";
 			}
-		}	
-		
-		public function __toString() {
-			return "je suis une voiture de couleur " . $this->_couleur . "<br />";
+			$desc .= $this->getEnergie();
+			return $desc;
 		}
 	
 	}
