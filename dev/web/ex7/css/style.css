@@ -1,0 +1,32 @@
+/* 
+ * Fichier de style de l'application Ardoise Magique 
+ *
+ */
+ 
+body {
+	background-color: #fffabb;
+}	
+
+.titre {
+	text-align: center;
+	font-style: italic;
+	margin-top: -0.2em;
+}
+
+#ardoiseMagique {
+	position: absolute;
+	left: 50%;
+	margin-left: -500px;
+	top: 50%;
+	margin-top: -325px;
+}
+
+.zoneDessin {
+	position: absolute;
+	left: 50%;
+	margin-left: -300px;
+	top: 50%;
+	margin-top: -167px; /* -182 + 15 */
+	background-color: black;
+	border-radius: 20px;
+}	
