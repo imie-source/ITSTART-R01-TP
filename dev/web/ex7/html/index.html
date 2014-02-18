@@ -7,11 +7,14 @@
 </head>
 <body>
 <h1 class="titre">Mon ardoise magique</h1>
-<img id="ardoiseMagique" alt="image ardoise magique" src="../medias/images/ardoise.png" />
+<map name="effacer">
+	<area shape="circle" coords="795,615,70" onclick="noircir('zoneEncre');" />
+</map>
+<img id="ardoiseMagique" usemap="#effacer" alt="image ardoise magique" src="../medias/images/ardoise.png" />
 <img id="fond" class="zoneDessin" alt="image de fond" src="../medias/images/fond.jpg" />
 <canvas id="zoneEncre" class="zoneDessin" width="600" height="365"></canvas>
 <script type="text/javascript" lang="javascript">
-	initEventListener();
+	initEventListener("zoneEncre", 10);
 </script>
 </body>
 </html> 

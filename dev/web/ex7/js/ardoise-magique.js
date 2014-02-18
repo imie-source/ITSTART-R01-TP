@@ -5,8 +5,8 @@
 
 var isMouseDown = false;
  
-function getMousePos(e) {
-	var canvas = document.getElementById("zoneEncre");
+function getMousePos(e, idCanvas) {
+	var canvas = document.getElementById(idCanvas);
 	var rect = canvas.getBoundingClientRect();
 	return { 
 		x: e.clientX - rect.left,
@@ -14,8 +14,8 @@ function getMousePos(e) {
 	};
 }	
  
-function noircir() {
-	var canvas = document.getElementById("zoneEncre");	
+function noircir(idCanvas) {
+	var canvas = document.getElementById(idCanvas);	
 	var context = canvas.getContext('2d');
 	context.beginPath();
 	context.rect(0,0,canvas.width,canvas.height);
@@ -23,19 +23,18 @@ function noircir() {
 	context.fill();
 } 
  
-function initEventListener() {
+function initEventListener(idCanvas, d) {
 
-	noircir();
+	noircir(idCanvas);
  
-	var canvas = document.getElementById("zoneEncre");
+	var canvas = document.getElementById(idCanvas);
 	
 	canvas.addEventListener('mousedown', function(e) { isMouseDown = true; } );
 	canvas.addEventListener('mouseup', function(e) { isMouseDown = false; } );
 	canvas.addEventListener('mousemove', function(e) { 
-		var posMouse = getMousePos(e);
+		var posMouse = getMousePos(e, idCanvas);
 		if (isMouseDown) {
 			var context = canvas.getContext('2d');
-			var d = 20;
 			context.clearRect(posMouse.x-d/2, posMouse.y-d/2, d, d);
 			//console.log('mouseMove : ' + posMouse.x + 'x' + posMouse.y); 
 		}	
